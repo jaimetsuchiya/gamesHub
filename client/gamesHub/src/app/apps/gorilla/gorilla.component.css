@@ -17,25 +17,29 @@
   #player_1 {
     text-align: left;
     float: left;
-    width: 300px;
+    width: 300px;    color: #fff;
+
   }
   
   #player_2 {
     text-align: right;
     float: right;
-    width: 135px;
+    width: 135px;    color: #fff;
+
   }
   
-  #container label, input {
+   label, input {
     float: left;
   }
   
-  #container label {
+  label {
     margin-right: 5px;
     clear: left;
+    color: #fff;
+
   }
   
-  #container input {
+  input {
     background: #0000a0;
     width: 50px;
     border: none;

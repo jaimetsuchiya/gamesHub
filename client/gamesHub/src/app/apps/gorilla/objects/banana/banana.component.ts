@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./banana.component.css']
 })
 export class BananaComponent implements OnInit {
-
-  context : any;
+  canvas: any;
+  context : CanvasRenderingContext2D;
   initx : number;
   inity : number;
   force : number;
@@ -17,40 +17,40 @@ export class BananaComponent implements OnInit {
   scale : number;
   gravity : number; // TODO: Make this something the user can change
   startTime : number;
-  wind : any;
+  wind : number;
   direction : string;
   timer : number;
   dx:number;
   dy:number;
   
-  constructor(
-    public _context: any, 
-    public _initx: number, 
-    public _inity: number, 
-    public _force: number, 
-    public _angle: number, 
-    public _wind: any 
-  ) {
-      this.context = _context;
-      this.initx = _initx;
-      this.inity = _inity;
-      this.force = _force;
-      this.angle = _angle;
-      this.wind = _wind;
-   }
+  constructor(){}
 
   ngOnInit() {
      
-      this.projectionX = 0;
-      this.projectionY = 0;
-      this.scale = 0.09;
-      this.gravity = 9.8; // TODO: Make this something the user can change
-      this.calcInitialPosition();
-      this.startTime = 0;
-      this.direction = 'up';
-      this.timer = 0;
   }
-/**
+    init( _context:any,
+      _initx: number,
+      _inity: number,
+      _force: number,
+      _angle: number,
+      _wind: number): void
+      {
+        this.initx = _initx;
+        this.inity = _inity;
+        this.force = _force;
+        this.angle = _angle;
+        this.wind = _wind;
+        this.context = _context;
+        this.projectionX = 0;
+        this.projectionY = 0;
+        this.scale = 0.09;
+        this.gravity = 9.8; // TODO: Make this something the user can change
+        this.calcInitialPosition();
+        this.startTime = 0;
+        this.direction = 'up';
+        this.timer = 0;
+      }
+    /**
      * x: Where are we at x
      * returns {Integer}
      */

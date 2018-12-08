@@ -10,15 +10,16 @@ import { WindComponent } from './objects/wind/wind.component'
   providedIn: 'root'
 })
 export class GorillaService {
+  canvas = <HTMLCanvasElement> document.getElementById("canvas");
+
   empty : boolean;
-  canvas : any;
   width : number;
   height : number;
-  context : any;
   sunShock : boolean;
   winner : number[];
   scores : any;
   buildings : BuildingComponent[];
+  building: BuildingComponent;
   frameRate : number;
   wind : WindComponent;
   sun : SunComponent;
@@ -27,30 +28,34 @@ export class GorillaService {
   player_2: GorillaComponent;
   nextPlayer: number;
   startTime: Date;
+  gorila: GorillaComponent;
+  context: CanvasRenderingContext2D;
 
-  constructor(
-    public _context: any,
-    public _wind: WindComponent,
-    public _sun: SunComponent,
-    public _building: BuildingComponent,
-    public _gorilla: GorillaComponent
-  ) { 
-    this.empty = true;
-    this.canvas = document.getElementById('canvas');
-    this.width = this.canvas.width;
-    this.height = this.canvas.height;
-    this.context = this.canvas.getContext('2d');
-    this.sunShock = false;
-    this.winner = [];
-    this.scores = {
-      player_1: 0,
-      player_2: 0
-    };
-    this.buildings = [];
-    this.frameRate = 15; // Note, this may change
-    this.wind = new WindComponent( this.context );
+  constructor() { 
+    
   }
 
+    init() {
+      this.empty = true;
+      this.canvas = <HTMLCanvasElement> document.getElementById("canvas");
+      this.context = this.canvas.getContext("2d"); 
+      this.width = (this.canvas.width);
+      this.height = (this.canvas.height);
+      this.sunShock = false;
+      this.winner = [];
+      this.scores = {
+        player_1: 0,
+        player_2: 0
+      };
+      this.nextPlayer = 1;
+      this.buildings = [];
+      this.frameRate = 15; // Note, this may change
+      this.wind = new WindComponent();
+      this.wind.init(this.canvas, this.context);
+      this.sun = new SunComponent();
+      this.sun.init(this.canvas, this.context);
+      
+    }
   /**
      * createScene: Sets up and rerenders the main scene
      */
@@ -61,7 +66,8 @@ export class GorillaService {
         this.empty = false;
         this.createBuildings();
         this.createGorillas();
-        this.wind = new WindComponent( this.context );
+        this.wind = new WindComponent();
+        this.wind.init(this.canvas, this.context);
       } else {
         this.reCreateBuildings();
         this.reCreateColissions();
@@ -89,7 +95,8 @@ export class GorillaService {
      * returns {Object} building Returns a new building object
      */
     createBuilding ( x ) {
-      var building = new BuildingComponent( this.context, this.height );
+      var building = new BuildingComponent();
+      building.init(this.canvas, this.context);
       var y = Math.floor( Math.random() * 150 );
       building.create( x, y );
       this.buildings.push( building );
@@ -118,11 +125,10 @@ export class GorillaService {
      * createSun: Builds the happy/shocked sun
      */
     createSun  () {
-      var sun = new SunComponent( this.context );
       if ( this.sunShock ) {
-        sun.create( true );
+        this.sun.create( true );
       } else {
-        sun.create(false);
+        this.sun.create(false);
       }
     };
 
@@ -149,13 +155,15 @@ export class GorillaService {
       // Build and position Player_1
       buildingOnePosition = Math.floor( Math.random() * this.buildings.length / 2 );
       building = this.buildings[ buildingOnePosition ];
-      this.player_1 = new GorillaComponent( this.context, 1 );
+      this.player_1 = new GorillaComponent();
+      this.player_1.init(this.context, 1);
       this.player_1.create( building.middlePosition(), building.positionAtY() );
 
       // Build and position Player_2
       buildingTwoPosition = Math.floor( Math.random() * (this.buildings.length - 2 - buildingOnePosition) ) + buildingOnePosition + 1;
       building = this.buildings[ buildingTwoPosition ];
-      this.player_2 = new GorillaComponent( this.context, 2 );
+      this.player_2 = new GorillaComponent();
+      this.player_2.init(this.context, 2);
       this.player_2.create( building.middlePosition(), building.positionAtY() );
     };
 
@@ -181,8 +189,10 @@ export class GorillaService {
       }
       player = this['player_' + player];
       player.getBanana( force, angle, this.wind.windSpeed );
+      //this.animateBanana( player ); 
       this.timeout = setTimeout( function () {
-        this.animateBanana( player );
+        that.startTime = new Date();
+        that.animateBanana( player );
       }, this.frameRate );
     };
 

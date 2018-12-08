@@ -8,29 +8,35 @@ import { ShapeComponent } from '../Shape/shape.component';
 })
 export class SunComponent implements OnInit {
 
-  SUN_BODY_COLOR = "rgb( 255, 255, 0 )";
-  SUN_EYES_COLOR = "rgb( 0, 0, 160 )";
+  SUN_BODY_COLOR : string;
+  SUN_EYES_COLOR : string;
 
-  context: any;
-  canvas: any;
+  context: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
   mouth: boolean;
   width: number;
   height: number;
   position: number;
 
-  constructor(
-    public _context: any
-  ) {
-    this.context = _context;
-   }
+  constructor(){}
 
-  ngOnInit() {
-    
-    this.canvas = document.getElementById('canvas');
+  init(
+      _canvas: HTMLCanvasElement,
+     _context:CanvasRenderingContext2D
+  ):void  {
+    this.canvas = _canvas;
     this.mouth = false;
     this.width = 10;
     this.height = 27;
     this.position = ( this.canvas.width / 2 );
+    this.context = _context;
+    this.SUN_BODY_COLOR = "rgb( 255, 255, 0 )";
+    this.SUN_EYES_COLOR = "rgb( 0, 0, 160 )";
+
+   }
+
+  ngOnInit() {
+
   }
 /**
      * create: Begin sun build-out
@@ -48,7 +54,8 @@ export class SunComponent implements OnInit {
      * createBody: Build the sun's body
      */
     createBody() {
-      var shape = new ShapeComponent( this.context );
+      var shape = new ShapeComponent();
+      shape.init(this.context);
       this.context.fillStyle = this.SUN_BODY_COLOR;
       shape.circle( this.position, this.height, this.width );
     };
@@ -57,7 +64,8 @@ export class SunComponent implements OnInit {
      * createEyes: Build left/right eye(s)
      */
     createEyes () {
-      var shape = new ShapeComponent( this.context );
+      var shape = new ShapeComponent();
+      shape.init(this.context);
       this.context.fillStyle = this.SUN_EYES_COLOR;
       // create left eye
       shape.circle( this.position - 2.5, this.height - 2.5, 1 );
@@ -75,6 +83,7 @@ export class SunComponent implements OnInit {
         this.context.moveTo( this.position, this.height );
         return this.context.lineTo( this.position + 20 * Math.cos(a), this.height + 20 * Math.sin(a) );
       }
+      
       this.context.strokeStyle = this.SUN_BODY_COLOR;
       this.context.beginPath();
       this.context.lineWidth = 1;
@@ -92,7 +101,8 @@ export class SunComponent implements OnInit {
       this.context.strokeStyle = this.SUN_EYES_COLOR;
       if ( this.mouth ) {
         this.context.fillStyle = this.SUN_EYES_COLOR;
-        var shape = new ShapeComponent( this.context );
+        var shape = new ShapeComponent();
+        shape.init(this.context);
         shape.circle( this.position, this.height + 5, this.width / 4 );
       } else {
         this.context.beginPath();

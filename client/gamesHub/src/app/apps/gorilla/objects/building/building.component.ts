@@ -1,6 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ShapeComponent } from '../Shape/shape.component';
 
+
+export interface BuildingWindow {
+  x: number;
+  y: number;
+  color: string;
+}
+
+export interface ColisionArgs {
+  x: number;
+  y: number;
+}
+
 @Component({
   selector: 'app-building',
   templateUrl: './building.component.html',
@@ -8,8 +20,8 @@ import { ShapeComponent } from '../Shape/shape.component';
 })
 export class BuildingComponent implements OnInit {
 
-  context : any;
-  canvas: any;
+  context : CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
   height: number;
   width : number;
   baseHeight : number;
@@ -19,32 +31,33 @@ export class BuildingComponent implements OnInit {
   windowWidth : number;
   buildingColors : string[];
   buildingColor  : string;
-  windows : any[];
-  colissions : any[];
+  windows : BuildingWindow[];
+  colissions : ColisionArgs[];
   x: number;
   y: number;
   color: string;
 
-  constructor(
-    public _context: any,
-    public _height: number
-  ) { 
-    this.context = _context;
-    this.height = _height;
-  }
+  constructor(){}
+
+    init(
+      _canvas: HTMLCanvasElement,
+      _context: CanvasRenderingContext2D): void {
+      this.canvas = _canvas;
+      this.context = _context;
+      this.width = 37 + Math.floor( Math.random() * 70 );
+      this.baseHeight = 80;
+      this.baseLine = 335;
+      this.spacing = 1;
+      this.windowHeight = 7;
+      this.windowWidth = 4;
+      this.buildingColors = ['rgb( 173, 170, 173 )', 'rgb( 0, 170, 173 )', 'rgb( 173, 0, 0 )'];
+      this.buildingColor = null;
+      this.windows = [];
+      this.colissions = [];
+    };
 
   ngOnInit() {
-    this.canvas = document.getElementById('canvas');
-    this.width = 37 + Math.floor( Math.random() * 70 );
-    this.baseHeight = 80;
-    this.baseLine = 335;
-    this.spacing = 1;
-    this.windowHeight = 7;
-    this.windowWidth = 4;
-    this.buildingColors = ['rgb( 173, 170, 173 )', 'rgb( 0, 170, 173 )', 'rgb( 173, 0, 0 )'];
-    this.buildingColor = null;
-    this.windows = [];
-    this.colissions = [];
+    
   }
 
     /**
@@ -113,7 +126,7 @@ export class BuildingComponent implements OnInit {
         winRef = this.windows;
         for ( i = 0, winLength = winRef.length; i < winLength; i++ ) {
           w = winRef[i];
-          this.createWindow( w[0], w[1], w[2] );
+          this.createWindow( w.x, w.y, w.color );
         }
         return;
       }
@@ -123,7 +136,12 @@ export class BuildingComponent implements OnInit {
         for ( var column = 3; column < Math.floor( this.height - 15 ); column += 15 ) {
           this.color = ( Math.floor(Math.random() * 5) > 0 ) ? 'rgb( 255, 255, 82 )' : 'rgb( 82, 85, 82 )';
           this.createWindow( _x + 1 + row, Math.floor( (this.baseLine - this.height) + 1 + column ), this.color );
-          this.windows.push( [_x + 1 + row, Math.floor( (this.baseLine - this.height) + 1 + column ), this.color] );
+          var objWindow = {
+            x: _x + 1 + row,
+            y: Math.floor( (this.baseLine - this.height) + 1 + column ),
+            color: this.color
+          };
+          this.windows.push(objWindow);
         }
       }
     };
@@ -147,7 +165,11 @@ export class BuildingComponent implements OnInit {
      */
     checkColission( _x, _y ) {
       if ( this.positionAtY() - 25 <= _y && ( _x > this.x && _x < this.x + this.width + 10 ) ) {
-        this.colissions.push( [_x - 20, _y] );
+        var colisionArgs = {
+          x: _x - 20,
+          y: _y
+        };
+        this.colissions.push(colisionArgs);
         this.createColission( _x - 20, _y );
         return true;
       }
@@ -164,7 +186,8 @@ export class BuildingComponent implements OnInit {
       width = 25;
       height = 15;
       this.context.fillStyle = 'rgb( 0, 0, 160 )';
-      shape = new ShapeComponent( this.context );
+      shape = new ShapeComponent();
+      shape.init(this.context);
       shape.ellipse( _x, _y, width, height );
     };
 

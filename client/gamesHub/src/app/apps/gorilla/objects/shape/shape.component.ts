@@ -7,15 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShapeComponent implements OnInit {
 
-  context: any;
+  context: CanvasRenderingContext2D;
   canvas: any;
 
-  constructor(
-    public _context: any
-  ) { 
+  constructor(){}
+
+  init( _context: CanvasRenderingContext2D): void { 
     this.context = _context;
-    this.canvas = document.getElementById('canvas');
-  }
+  };
 
   ngOnInit() {
   }

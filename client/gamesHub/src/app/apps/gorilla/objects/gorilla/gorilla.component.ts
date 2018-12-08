@@ -8,9 +8,9 @@ import { ShapeComponent } from '../Shape/shape.component';
   styleUrls: ['./gorilla.component.css']
 })
 export class GorillaComponent implements OnInit {
-    BODY_COLOR : 'rgb( 255, 170, 82 )';
-    BODY_LINE  : 'rgb( 0, 0, 160 )';
-    context : any;
+    BODY_COLOR : string;
+    BODY_LINE  : string;
+    context : CanvasRenderingContext2D;
     playerNumber : number;
     width : number;
     height : number;
@@ -27,32 +27,35 @@ export class GorillaComponent implements OnInit {
     justThrown : boolean;
     x: number;
     y: number;
-    banana: any;
+    banana: BananaComponent;
     
-  constructor(
-    public _context: any,
-    public _playerNumber: number
-  ) {
-      this.playerNumber = _playerNumber;
-      this.context = _context;
-     }
+  constructor() {}
 
   ngOnInit() {
-    this.oldY = false;
-    this.width = 40;
-    this.height = 40;
-    this.wins = 0;
-    this.animations = 0;
-    this.explosionWidth = 40;
-    this.explosionHeight = 40;
-    this.directionRight = 'down';
-    this.directionLeft = 'up';
-    this.timer = 0;
-    this.dead = false;
-    this.animate = false;
-    this.justThrown = false;
+    
   }
 
+    init( _context: CanvasRenderingContext2D, _playerNumber: number): void
+    {
+      this.playerNumber = _playerNumber;
+      this.oldY = false;
+      this.context = _context;
+      this.width = 40;
+      this.height = 40;
+      this.wins = 0;
+      this.animations = 0;
+      this.explosionWidth = 40;
+      this.explosionHeight = 40;
+      this.directionRight = 'down';
+      this.directionLeft = 'up';
+      this.timer = 0;
+      this.dead = false;
+      this.animate = false;
+      this.justThrown = false;
+      this.BODY_COLOR = 'rgb( 255, 170, 82 )';
+      this.BODY_LINE  = 'rgb( 0, 0, 160 )';
+    };
+    
     /**
      * create: Build the player out
      * Depending on state, hands will be either down or up for throwing
@@ -185,7 +188,8 @@ export class GorillaComponent implements OnInit {
      * params {Object} wind
      */
     getBanana( force, angle, wind ) {
-      this.banana = new BananaComponent( this.context, this.x, this.y - 17, force, angle, wind );
+      this.banana = new BananaComponent();
+      this.banana.init(this.context, this.x, this.y - 17, force, angle, wind );
     };
 
     /**
@@ -193,7 +197,8 @@ export class GorillaComponent implements OnInit {
      */
     renderDead () {
       this.context.fillStyle = 'rgb( 0, 0, 160 )';
-      var shape = new ShapeComponent( this.context );
+      var shape = new ShapeComponent();
+      shape.init(this.context);
       shape.ellipse( this.x - this.width * 2, this.y, 2.5 * this.explosionWidth, this.explosionHeight );
     };
 
@@ -207,7 +212,8 @@ export class GorillaComponent implements OnInit {
       this.explosionHeight += 20;
       width = this.explosionWidth;
       height = this.explosionHeight;
-      shape = new ShapeComponent( this.context );
+      shape = new ShapeComponent();
+      shape.init(this.context);
       shape.ellipse( this.x - this.width * 2, this.y, 2.5 * width, height );
     };
 

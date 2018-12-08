@@ -7,20 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WindComponent implements OnInit {
 
-  context: any;
-  canvas: any;
+  context: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
   windSpeed: number;
   windLine: number;
   arrowDir: number;
-  
-  constructor(
-    public _context: any
-  ) {
-    this.context = _context;
-   }
+
+  constructor(){}
 
   ngOnInit() {
-    this.canvas = document.getElementById('canvas');
+    
+  }
+
+  init(_canvas: HTMLCanvasElement,_context: CanvasRenderingContext2D):void{
+    this.canvas = _canvas;
+    this.context = _context;
+
     this.windSpeed = Math.floor( Math.random() * 10 - 5 );
     if ( Math.floor( Math.random() * 3 ) === 1 ) {
       if ( this.windSpeed > 0 ) {
