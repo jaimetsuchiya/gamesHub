@@ -1,46 +1,40 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef, Injectable } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
-import { BuildingComponent } from './apps/gorilla/objects/building/building.component';
-import { BananaComponent } from './apps/gorilla/objects/banana/banana.component';
-import { GorillaComponent } from './apps/gorilla/objects/gorilla/gorilla.component';
-import { SunComponent } from './apps/gorilla/objects/sun/sun.component';
-import { WindComponent } from './apps/gorilla/objects/wind/wind.component';
-import { ShapeComponent } from './apps/gorilla/objects/shape/shape.component';
+import { AppsComponent } from './apps/apps.component';
+import { CheckersComponent } from './apps/checkers/checkers.component';
 import { GorillaAppComponent } from './apps/gorilla/gorilla.component';
+import { GorillaModule } from './apps/gorilla/gorilla.module';
+import { CheckersModule } from './apps/checkers/checkers.module';
 
 const appRoutes: Routes = [
     
+  { path: 'apps/checkers', component: CheckersComponent },
   { path: 'apps/gorilla', component: GorillaAppComponent },
-  {
-    path      : '**',
-    component:  AppComponent
-  },
+  { path: 'apps', component: AppsComponent },
+  { path: '', component:  AppComponent  },
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BuildingComponent,
-    BananaComponent,
-    GorillaComponent,
-    SunComponent,
-    WindComponent,
-    ShapeComponent,
-    GorillaAppComponent
-  ],
   imports: [
     BrowserModule,
     UiModule,
     FormsModule,
+    GorillaModule,
+    CheckersModule,
     RouterModule.forRoot(appRoutes,  { enableTracing: true }),
   ],
   exports: [RouterModule],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    AppsComponent,
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
