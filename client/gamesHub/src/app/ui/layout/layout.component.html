@@ -1,6 +1,33 @@
 <app-header></app-header>
-<div class="container">
-  <ng-content>
-  </ng-content>
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="nav-small-cap">Games</li>
+                <li>
+                    <a class="waves-effect waves-dark" href="/apps/checkers" aria-expanded="false">
+                        <i class="far fa-circle text-danger"></i>
+                        <span class="hide-menu">Checkers</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-dark" href="/apps/gorilla" aria-expanded="false">
+                        <i class="far fa-circle text-success"></i>
+                        <span class="hide-menu">Gorilla</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<div class="page-wrapper">
+    <div class="container-fluid">
+      <ng-content>
+      </ng-content>
+    </div>
 </div>
 <app-footer></app-footer>
