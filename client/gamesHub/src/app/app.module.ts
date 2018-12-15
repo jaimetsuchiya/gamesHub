@@ -10,11 +10,14 @@ import { CheckersComponent } from './apps/checkers/checkers.component';
 import { GorillaAppComponent } from './apps/gorilla/gorilla.component';
 import { GorillaModule } from './apps/gorilla/gorilla.module';
 import { CheckersModule } from './apps/checkers/checkers.module';
+import { JogoDaVelhaComponent } from './apps/jogodavelha/jogodavelha.component';
+import { JogoDaVelhaModule } from './apps/jogodavelha/jogodavelha.module';
 
 const appRoutes: Routes = [
     
   { path: 'apps/checkers', component: CheckersComponent },
   { path: 'apps/gorilla', component: GorillaAppComponent },
+  { path: 'apps/jogodavelha', component: JogoDaVelhaComponent },
   { path: 'apps', component: AppsComponent },
   { path: '', component:  AppComponent  },
 ];
@@ -26,12 +29,13 @@ const appRoutes: Routes = [
     FormsModule,
     GorillaModule,
     CheckersModule,
-    RouterModule.forRoot(appRoutes,  { enableTracing: true }),
+    JogoDaVelhaModule,
+    RouterModule.forRoot(appRoutes,  { enableTracing: true })
   ],
   exports: [RouterModule],
   declarations: [
     AppComponent,
-    AppsComponent,
+    AppsComponent
   ],
   bootstrap: [
     AppComponent
