@@ -18,8 +18,7 @@ const appRoutes: Routes = [
   { path: 'apps/checkers', component: CheckersComponent },
   { path: 'apps/gorilla', component: GorillaAppComponent },
   { path: 'apps/jogodavelha', component: JogoDaVelhaComponent },
-  { path: 'apps', component: AppsComponent },
-  { path: '', component:  AppComponent  },
+  { path: 'apps', component: AppsComponent }
 ];
 
 @NgModule({
