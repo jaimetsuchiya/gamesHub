@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BananaComponent } from '../banana/banana.component';
-import { ShapeComponent } from '../Shape/shape.component';
+import { ShapeComponent } from '../shape/shape.component';
 
 @Component({
   selector: 'app-gorilla',

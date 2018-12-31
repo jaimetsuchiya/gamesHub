@@ -5,7 +5,7 @@ import { BananaComponent } from './objects/banana/banana.component';
 import { GorillaComponent } from './objects/gorilla/gorilla.component';
 import { SunComponent } from './objects/sun/sun.component';
 import { WindComponent } from './objects/wind/wind.component';
-import { ShapeComponent } from './objects/Shape/shape.component';
+import { ShapeComponent } from './objects/shape/shape.component';
 import { GorillaAppComponent } from './gorilla.component';
 import { GorillaService } from './gorilla.service';
 import { BrowserModule } from '@angular/platform-browser';

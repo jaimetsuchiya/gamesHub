@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ShapeComponent } from '../Shape/shape.component';
+import { ShapeComponent } from '../shape/shape.component';
 
 @Component({
   selector: 'app-sun',
