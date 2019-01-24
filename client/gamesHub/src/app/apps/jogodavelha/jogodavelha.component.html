@@ -1,6 +1,7 @@
 <div id="container">
     <div class="row">
         <h3>Jogo da Velha</h3>
+        <h6>Jogador: {{playerName}}</h6>
     </div>
     <div class="row">
         <div class="col-md-7 col-lg-7 col-xs-12">
@@ -61,20 +62,25 @@
                     <br />
                     <br />
                     <br />
-                    <p *ngIf="jogador==1 && !showFinal">Lance jogador 1 (X)</p>
-                    <p *ngIf="jogador==2 && !showFinal">Lance jogador 2 (O)</p>
+                    <!-- <p *ngIf="myTurn">Vez do Jogador: {{playerName}}</p>
+                    <p *ngIf="myRivalTurn">Vez do Jogador: {{playerNameRival}}</p> -->
+                    <p *ngIf="jogador==1 && !showFinal">Lance jogador {{playerNameRival}} (X)</p>
+                    <p *ngIf="jogador==2 && !showFinal">Lance jogador {{playerName}} (O)</p>
                 </div>
             </div>
         </div>
         <div class="col-md-5 col-lg-5 col-xs-12 alinhamentoGame">
-            <div class="InfoResult" *ngIf="showFinal">
+            <!-- <div class="InfoResult" *ngIf="showFinal"> -->
+            <div class="InfoResult">
                 <br>
-                <span>
-                    <p *ngIf="jogador==2">Vitória Jogador 1</p>
-                    <p *ngIf="jogador==1">Vitória Jogador 2</p>
+                <span *ngIf="showFinal">
+                    <p *ngIf="jogador==2">Vitória Jogador {{playerName}}</p>
+                    <p *ngIf="jogador==1">Vitória Jogador {{playerNameRival}}</p>
                     <p *ngIf="jogador==0">O jogo terminou empatado</p>
                     <br>
-                    <button class="botao" (click)="novoJogo()">Nova Parida</button>
+                </span>
+                <span>
+                    <button class="botao" (click)="novoJogo()">Nova Partida</button>
                     <button class="botao botaoright" (click)="novoJogoZerar()">Novo Jogo</button>
                 </span>
                 <br><br>
